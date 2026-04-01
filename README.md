@@ -61,7 +61,7 @@ Results on the **Visual (baseline)** setting. Accuracy (%) per task type.
 ### 1. Installation
 
 ```bash
-git clone https://github.com/YOUR_ORG/IKEA-Bench.git
+git clone https://github.com/Ryenhails/IKEA-Bench.git
 cd IKEA-Bench
 pip install -r requirements.txt
 ```
