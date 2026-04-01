@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKEA-Bench</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #555570;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --accent-dark: #1d4ed8;
+            --border: #e5e7eb;
+            --gradient-start: #1e3a5f;
+            --gradient-end: #2563eb;
+            --warm: #f59e0b;
+            --green: #10b981;
+            --red: #ef4444;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white;
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(255,255,255,0.03) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; max-width: 800px; margin: 0 auto; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+        .hero h1 span { color: #93c5fd; }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 12px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        .hero-authors {
+            font-size: 0.95rem;
+            opacity: 0.75;
+            margin-bottom: 28px;
+        }
+        .hero-authors a { color: #93c5fd; text-decoration: none; }
+        .hero-authors a:hover { text-decoration: underline; }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .hero-buttons a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: white;
+            color: var(--gradient-start);
+        }
+        .btn-primary:hover { background: #f0f4ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn-outline {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+
+        /* ── Sections ── */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 72px 0; }
+        section:nth-child(even) { background: var(--surface); }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        /* ── Stats Bar ── */
+        .stats-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 28px 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* ── Teaser ── */
+        .teaser-img {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: block;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+        .teaser-caption {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Task Taxonomy ── */
+        .taxonomy-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+        }
+        .taxonomy-table th, .taxonomy-table td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .taxonomy-table th {
+            background: var(--gradient-start);
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .taxonomy-table td {
+            font-size: 0.92rem;
+            background: var(--surface);
+        }
+        .taxonomy-table tr:last-child td { border-bottom: none; }
+        .taxonomy-table tr:hover td { background: #f8fafc; }
+        .task-code {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+        .task-count {
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        /* ── Task Examples Grid ── */
+        .examples-img {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ── Leaderboard ── */
+        .leaderboard-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            min-width: 700px;
+        }
+        .leaderboard th {
+            background: var(--gradient-start);
+            color: white;
+            padding: 12px 14px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+        .leaderboard td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            white-space: nowrap;
+        }
+        .leaderboard tr:hover td { background: #f0f4ff; }
+        .leaderboard tr:last-child td { border-bottom: none; }
+        .leaderboard .model-name { font-weight: 600; }
+        .leaderboard .rank {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+        }
+        .leaderboard .best { color: var(--accent-dark); font-weight: 700; }
+        .leaderboard .avg-col { background: #f0f7ff !important; font-weight: 600; }
+        .leaderboard tr:hover .avg-col { background: #e0edff !important; }
+        .medal { font-size: 1.1rem; }
+
+        /* ── Findings ── */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .finding-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: all 0.2s;
+        }
+        .finding-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        .finding-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+        .finding-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .finding-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ── Analysis ── */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .analysis-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .analysis-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+        .analysis-card.full-width { grid-column: 1 / -1; }
+        .analysis-card img {
+            width: 100%;
+            display: block;
+        }
+        .analysis-card-body {
+            padding: 20px 24px;
+        }
+        .analysis-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .analysis-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .layer-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .layer-1 { background: #fef3c7; color: #92400e; }
+        .layer-2 { background: #dbeafe; color: #1e40af; }
+        .layer-3 { background: #d1fae5; color: #065f46; }
+
+        /* ── Code / Citation ── */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 24px;
+            border-radius: var(--radius);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            position: relative;
+        }
+        .code-block .comment { color: #64748b; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .keyword { color: #ff7b72; }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #94a3b8;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+
+        /* ── Footer ── */
+        footer {
+            background: var(--gradient-start);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 32px 20px;
+            font-size: 0.85rem;
+        }
+        footer a { color: #93c5fd; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero { padding: 60px 20px 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .stat-number { font-size: 1.5rem; }
+            .analysis-grid { grid-template-columns: 1fr; }
+            section { padding: 48px 0; }
+            .section-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════ Hero ════════ -->
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">ACM MM 2026</div>
+        <h1>IKEA-<span>Bench</span></h1>
+        <p class="hero-subtitle">
+            Benchmarking and Mechanistic Analysis of Vision-Language Models<br>
+            for Cross-Depiction Assembly Instruction Alignment
+        </p>
+        <p class="hero-authors">
+            <a href="#">Zhuchenyang Liu</a> &middot;
+            <a href="#">Yao Zhang</a> &middot;
+            <a href="#">Yu Xiao</a><br>
+            Aalto University
+        </p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z"/><path fill-rule="evenodd" d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 10.082 10.082 0 0 0-1.189.762c-.39.282-.726.572-.988.849-.128.135-.243.283-.34.444-.097.16-.187.36-.187.6 0 .166.05.334.147.49z"/></svg>
+                Paper
+            </a>
+            <a href="https://github.com/Ryenhails/IKEA-Bench" class="btn-outline">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                GitHub
+            </a>
+            <a href="https://huggingface.co/datasets/Ryenhails/ikea-bench" class="btn-outline">
+                &#129303; Dataset
+            </a>
+            <a href="#" class="btn-outline">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.643 15C13.979 15 15 13.845 15 12.5V5.366c0-.354-.149-.693-.41-.943L11.223.923A1.39 1.39 0 0 0 10.237.5H3.357C2.021.5 1 1.655 1 3v9.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 4h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 2h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 2h3.5a.5.5 0 0 1 0 1H5.5a.5.5 0 0 1 0-1z"/></svg>
+                arXiv
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ════════ Stats ════════ -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="stats-grid">
+            <div>
+                <div class="stat-number">1,623</div>
+                <div class="stat-label">Benchmark Questions</div>
+            </div>
+            <div>
+                <div class="stat-number">19</div>
+                <div class="stat-label">VLMs Evaluated</div>
+            </div>
+            <div>
+                <div class="stat-number">6</div>
+                <div class="stat-label">Task Types</div>
+            </div>
+            <div>
+                <div class="stat-number">3</div>
+                <div class="stat-label">Alignment Strategies</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════ Overview ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Overview</span>
+        <h2 class="section-title">Bridging Diagrams and Reality</h2>
+        <p class="section-desc">
+            Can VLMs understand wordless assembly diagrams well enough to match them with real-world video?
+            IKEA-Bench systematically evaluates this <em>cross-depiction alignment</em> ability across 29 furniture products.
+        </p>
+        <img src="assets/teaser.png" alt="IKEA-Bench teaser: assembly diagrams vs. video frames" class="teaser-img">
+        <p class="teaser-caption">
+            Assembly instruction diagrams (left) use schematic line drawings to depict steps,
+            while real-world videos (right) show the same actions in photorealistic form.
+            Bridging this <strong>depiction gap</strong> is the core challenge.
+        </p>
+    </div>
+</section>
+
+<!-- ════════ Task Taxonomy ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Benchmark</span>
+        <h2 class="section-title">Six Task Types, Two Dimensions</h2>
+        <p class="section-desc">
+            Tasks span cross-modal alignment (matching diagrams to video) and
+            procedural reasoning (understanding assembly sequences).
+        </p>
+
+        <table class="taxonomy-table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Task</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>N</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="task-code">T1</span></td>
+                    <td>Step Recognition</td>
+                    <td>Which diagram matches the action in the video?</td>
+                    <td>4-way MC</td>
+                    <td class="task-count">320</td>
+                </tr>
+                <tr>
+                    <td><span class="task-code">T2</span></td>
+                    <td>Action Verification</td>
+                    <td>Does this video match this diagram?</td>
+                    <td>Binary</td>
+                    <td class="task-count">350</td>
+                </tr>
+                <tr>
+                    <td><span class="task-code">T3</span></td>
+                    <td>Progress Tracking</td>
+                    <td>Which step in the full sequence is happening now?</td>
+                    <td>4-way MC</td>
+                    <td class="task-count">334</td>
+                </tr>
+                <tr>
+                    <td><span class="task-code">T4</span></td>
+                    <td>Next-Step Prediction</td>
+                    <td>What diagram comes after the current video action?</td>
+                    <td>4-way MC</td>
+                    <td class="task-count">204</td>
+                </tr>
+                <tr>
+                    <td><span class="task-code">D1</span></td>
+                    <td>Video Discrimination</td>
+                    <td>Do two video clips show the same assembly step?</td>
+                    <td>Binary</td>
+                    <td class="task-count">350</td>
+                </tr>
+                <tr>
+                    <td><span class="task-code">D2</span></td>
+                    <td>Instruction Comprehension</td>
+                    <td>What is the correct order of three shuffled diagrams?</td>
+                    <td>4-way MC</td>
+                    <td class="task-count">65</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <img src="assets/task_examples.png" alt="Task examples for all 6 types" class="examples-img">
+    </div>
+</section>
+
+<!-- ════════ Leaderboard ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Results</span>
+        <h2 class="section-title">Leaderboard</h2>
+        <p class="section-desc">
+            Accuracy (%) under the Visual baseline setting. Even the best model reaches only 65.9% average &mdash;
+            well below human-level performance on these tasks.
+        </p>
+
+        <div class="leaderboard-wrap">
+            <table class="leaderboard">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Model</th>
+                        <th>Params</th>
+                        <th>T1</th>
+                        <th>T2</th>
+                        <th>T3</th>
+                        <th>T4</th>
+                        <th>D1</th>
+                        <th>D2</th>
+                        <th>Avg</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="rank"><span class="medal">&#129351;</span></td><td class="model-name">Gemini-3-Flash</td><td>-</td><td class="best">65.3</td><td class="best">68.6</td><td class="best">65.6</td><td class="best">43.1</td><td class="best">71.1</td><td>81.5</td><td class="avg-col best">65.9</td></tr>
+                    <tr><td class="rank"><span class="medal">&#129352;</span></td><td class="model-name">Gemini-3.1-Pro</td><td>-</td><td>62.8</td><td>65.1</td><td>65.0</td><td>41.7</td><td>67.4</td><td>76.9</td><td class="avg-col">63.2</td></tr>
+                    <tr><td class="rank"><span class="medal">&#129353;</span></td><td class="model-name">Qwen3.5-27B</td><td>27B</td><td>59.4</td><td>62.9</td><td>59.3</td><td>41.2</td><td>63.7</td><td>70.8</td><td class="avg-col">59.6</td></tr>
+                    <tr><td class="rank">4</td><td class="model-name">InternVL3.5-38B</td><td>38B</td><td>54.4</td><td>61.4</td><td>47.3</td><td>37.7</td><td>61.4</td><td>67.7</td><td class="avg-col">55.0</td></tr>
+                    <tr><td class="rank">5</td><td class="model-name">Qwen3.5-9B</td><td>9B</td><td>57.8</td><td>63.7</td><td>46.7</td><td>38.2</td><td>63.1</td><td>58.5</td><td class="avg-col">54.7</td></tr>
+                    <tr><td class="rank">6</td><td class="model-name">Qwen3-VL-8B</td><td>8B</td><td>53.1</td><td>56.6</td><td>49.4</td><td>39.7</td><td>58.3</td><td>58.5</td><td class="avg-col">52.6</td></tr>
+                    <tr><td class="rank">7</td><td class="model-name">Qwen3-VL-30B-A3B</td><td>30B</td><td>48.8</td><td>58.3</td><td>50.6</td><td>34.3</td><td>60.0</td><td>56.9</td><td class="avg-col">51.5</td></tr>
+                    <tr><td class="rank">8</td><td class="model-name">GLM-4.1V-9B</td><td>9B</td><td>48.4</td><td>55.7</td><td>43.7</td><td>35.8</td><td>50.3</td><td>47.7</td><td class="avg-col">46.9</td></tr>
+                    <tr><td class="rank">9</td><td class="model-name">MiniCPM-V-4.5</td><td>8B</td><td>49.7</td><td>55.7</td><td>41.0</td><td>32.8</td><td>50.0</td><td>50.8</td><td class="avg-col">46.7</td></tr>
+                    <tr><td class="rank">10</td><td class="model-name">Qwen2.5-VL-7B</td><td>7B</td><td>49.1</td><td>50.9</td><td>35.0</td><td>36.8</td><td>46.0</td><td>53.8</td><td class="avg-col">45.3</td></tr>
+                    <tr><td class="rank">11</td><td class="model-name">Gemma3-27B</td><td>27B</td><td>43.1</td><td>55.7</td><td>37.1</td><td>31.4</td><td>53.7</td><td>41.5</td><td class="avg-col">43.8</td></tr>
+                    <tr><td class="rank">12</td><td class="model-name">InternVL3.5-8B</td><td>8B</td><td>39.4</td><td>53.7</td><td>36.5</td><td>31.4</td><td>49.4</td><td>50.8</td><td class="avg-col">43.5</td></tr>
+                    <tr><td class="rank">13</td><td class="model-name">Qwen2.5-VL-3B</td><td>3B</td><td>42.8</td><td>51.1</td><td>35.6</td><td>28.9</td><td>48.3</td><td>52.3</td><td class="avg-col">43.2</td></tr>
+                    <tr><td class="rank">14</td><td class="model-name">Qwen3.5-2B</td><td>2B</td><td>44.4</td><td>56.6</td><td>32.9</td><td>36.3</td><td>51.4</td><td>36.9</td><td class="avg-col">43.1</td></tr>
+                    <tr><td class="rank">15</td><td class="model-name">Qwen3-VL-2B</td><td>2B</td><td>42.2</td><td>50.0</td><td>29.6</td><td>34.8</td><td>50.0</td><td>26.2</td><td class="avg-col">38.8</td></tr>
+                    <tr><td class="rank">16</td><td class="model-name">Gemma3-12B</td><td>12B</td><td>35.3</td><td>49.7</td><td>35.9</td><td>28.4</td><td>49.1</td><td>32.3</td><td class="avg-col">38.5</td></tr>
+                    <tr><td class="rank">17</td><td class="model-name">Gemma3-4B</td><td>4B</td><td>39.4</td><td>50.3</td><td>27.8</td><td>29.4</td><td>47.7</td><td>20.0</td><td class="avg-col">35.8</td></tr>
+                    <tr><td class="rank">18</td><td class="model-name">LLaVA-OV-8B</td><td>8B</td><td>35.3</td><td>46.3</td><td>27.8</td><td>29.4</td><td>41.4</td><td>27.7</td><td class="avg-col">34.7</td></tr>
+                    <tr><td class="rank">19</td><td class="model-name">InternVL3.5-2B</td><td>2B</td><td>33.4</td><td>50.3</td><td>29.9</td><td>23.0</td><td>48.6</td><td>20.0</td><td class="avg-col">34.2</td></tr>
+                    <tr style="color: var(--text-secondary); font-style: italic;"><td class="rank">-</td><td>Random</td><td>-</td><td>25.0</td><td>50.0</td><td>25.0</td><td>25.0</td><td>50.0</td><td>25.0</td><td class="avg-col">33.3</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Key Findings ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Key Findings</span>
+        <h2 class="section-title">What We Discovered</h2>
+        <p class="section-desc">Three key insights from evaluating 19 VLMs across 3 alignment strategies.</p>
+
+        <div class="findings-grid">
+            <div class="finding-card">
+                <div class="finding-icon" style="background: #fef3c7;">&#128065;</div>
+                <h3>Diagram Blindness</h3>
+                <p>
+                    All 17 open-source models perform worse on D2 (instruction ordering) with Visual input
+                    than with Text Only &mdash; they struggle to <em>read</em> diagrams they were supposedly trained on.
+                    Text descriptions consistently rescue comprehension.
+                </p>
+            </div>
+            <div class="finding-card">
+                <div class="finding-icon" style="background: #dbeafe;">&#9878;&#65039;</div>
+                <h3>Text Helps Comprehension, Hurts Alignment</h3>
+                <p>
+                    Adding text descriptions boosts diagram understanding (D2: +24pp) but <em>degrades</em>
+                    cross-modal alignment (T1: &minus;6pp). Text acts as a shortcut &mdash; models rely on
+                    text matching and attend less to visual content.
+                </p>
+            </div>
+            <div class="finding-card">
+                <div class="finding-icon" style="background: #d1fae5;">&#129504;</div>
+                <h3>Architecture > Scale</h3>
+                <p>
+                    Qwen3.5-9B (9B) outperforms InternVL3.5-38B (38B) and Gemma3-27B (27B)
+                    on cross-depiction tasks. Model family matters more than parameter count
+                    for diagram understanding.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Mechanistic Analysis ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Analysis</span>
+        <h2 class="section-title">Three-Layer Mechanistic Analysis</h2>
+        <p class="section-desc">
+            We probe <em>why</em> models fail at diagram understanding by examining three processing stages:
+            visual encoding, language model reasoning, and attention routing.
+        </p>
+
+        <div class="analysis-grid">
+            <div class="analysis-card">
+                <img src="assets/cka_bars.png" alt="CKA analysis showing representational gap">
+                <div class="analysis-card-body">
+                    <span class="layer-badge layer-1">Layer 1 &middot; Representation</span>
+                    <h3>Diagrams and Video Diverge at the ViT Level</h3>
+                    <p>CKA similarity between diagram and video representations is moderate at the ViT level
+                    (0.43&ndash;0.58) and drops further after the visual merger, confirming a representational gap.</p>
+                </div>
+            </div>
+            <div class="analysis-card">
+                <img src="assets/cosine_shift.png" alt="Cosine similarity shift when text is added">
+                <div class="analysis-card-body">
+                    <span class="layer-badge layer-2">Layer 2 &middot; Hidden States</span>
+                    <h3>Text Supplants Diagram Information</h3>
+                    <p>When text descriptions are added, diagram influence on the LLM's prediction drops 59%
+                    while text influence increases 24%. The model switches from visual to text-mediated reasoning.</p>
+                </div>
+            </div>
+            <div class="analysis-card">
+                <img src="assets/attention_shift.png" alt="Attention routing across decoder layers">
+                <div class="analysis-card-body">
+                    <span class="layer-badge layer-3">Layer 3 &middot; Attention</span>
+                    <h3>Attention Shifts Away from Diagrams</h3>
+                    <p>When text is added, per-token attention to diagram tokens drops 52% while
+                    text tokens absorb the freed attention. The model learns to bypass diagram processing entirely.</p>
+                </div>
+            </div>
+            <div class="analysis-card">
+                <img src="assets/bottleneck.png" alt="Bottleneck analysis: visual encoder is the weak link">
+                <div class="analysis-card-body">
+                    <span class="layer-badge layer-1">Layer 1 &middot; Bottleneck</span>
+                    <h3>The Visual Encoder Is the Bottleneck</h3>
+                    <p>Cross-modal retrieval (diagram&rarr;video) fails even with strong within-modality performance,
+                    pinpointing the ViT's inability to create aligned cross-depiction representations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Quick Start ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Get Started</span>
+        <h2 class="section-title">Run in 3 Commands</h2>
+        <p class="section-desc">The entire dataset is on HuggingFace &mdash; no manual setup needed.</p>
+
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="comment"># 1. Clone and install</span>
+git clone https://github.com/Ryenhails/IKEA-Bench.git
+cd IKEA-Bench && pip install -r requirements.txt
+
+<span class="comment"># 2. Download data (~300MB from HuggingFace)</span>
+python setup_data.py
+
+<span class="comment"># 3. Evaluate your model</span>
+python -m ikea_bench.eval \
+    --model qwen3-vl-8b \
+    --setting baseline \
+    --input data/qa_benchmark.json \
+    --data-dir data \
+    --output results/qwen3-vl-8b_baseline.json
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Citation ════════ -->
+<section>
+    <div class="container">
+        <span class="section-label">Citation</span>
+        <h2 class="section-title">BibTeX</h2>
+        <p class="section-desc">If you use IKEA-Bench in your research, please cite our paper.</p>
+
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+@article{liu2026ikeabench,
+  title={Benchmarking and Mechanistic Analysis of Vision-Language
+         Models for Cross-Depiction Assembly Instruction Alignment},
+  author={Liu, Zhuchenyang and Zhang, Yao and Xiao, Yu},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2026}
+}
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Footer ════════ -->
+<footer>
+    <div class="container">
+        IKEA-Bench &middot; Aalto University &middot; 2026<br>
+        <a href="https://github.com/Ryenhails/IKEA-Bench">GitHub</a> &middot;
+        <a href="https://huggingface.co/datasets/Ryenhails/ikea-bench">HuggingFace</a> &middot;
+        Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
+    </div>
+</footer>
+
+<script>
+function copyCode(btn) {
+    const block = btn.parentElement;
+    const text = block.textContent.replace('Copy', '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+}
+</script>
+
+</body>
+</html>
