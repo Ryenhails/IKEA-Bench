@@ -6,6 +6,7 @@
 
 [![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/Ryenhails/ikea-bench)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://ryenhails.github.io/IKEA-Bench/)
 [![Paper](https://img.shields.io/badge/arXiv-2604.00913-red)](https://arxiv.org/abs/2604.00913)
 
 </div>
