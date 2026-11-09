@@ -424,6 +424,31 @@
             section { padding: 48px 0; }
             .section-title { font-size: 1.5rem; }
         }
+
+    /* Continuous (G2) corners. A plain border-radius welds a circular arc onto
+       a straight edge, so curvature jumps from 0 to 1/r at a single point; a
+       squircle ramps it in instead. superellipse(2) is the iOS shape.
+       Every rounded corner here is a rectangle corner, so all of them take it.
+       Has no effect where border-radius is 0, and a browser without corner-shape
+       renders this page exactly as before. */
+    @supports (corner-shape: squircle) {
+      .hero-badge,
+      .hero-buttons a,
+      .section-label,
+      .teaser-img,
+      .taxonomy-table,
+      .task-code,
+      .examples-img,
+      .leaderboard-wrap,
+      .finding-card,
+      .finding-icon,
+      .analysis-card,
+      .layer-badge,
+      .code-block,
+      .copy-btn {
+        corner-shape: squircle;
+      }
+    }
     </style>
 </head>
 <body>
